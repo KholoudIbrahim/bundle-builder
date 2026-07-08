@@ -57,7 +57,7 @@ export function AccordionSection({
             <span className="inline-flex h-8 w-8 items-center justify-center text-[var(--color-text-muted)]">
               <StepIcon className="h-6 w-6 stroke-[1.6]" />
             </span>
-            <span className="min-w-0 flex-1 text-[22px] font-normal leading-none text-[var(--color-obsidian)]">
+            <span className="min-w-0 flex-1 text-[22px] font-bold leading-none text-[var(--color-obsidian)]">
               {step.title}
             </span>
           </span>
