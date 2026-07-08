@@ -1,75 +1,46 @@
-# React + TypeScript + Vite
+# Wyze Security System Bundle Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is my submission for the frontend take-home assignment. It implements a multi-step bundle builder with a live review panel based on the provided Figma design.
 
-Currently, two official plugins are available:
+## Setup Instructions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Make sure you have Node installed.
 
-## React Compiler
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The app will be available at `http://localhost:5173/`.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* **React 19 & TypeScript:** Bootstrapped with Vite for fast HMR.
+* **Tailwind CSS v4:** Used for styling, combined with `clsx` and `tailwind-merge` for conditional class composition. 
+* **State Management:** Handled entirely via React hooks and Context, avoiding the overhead of external libraries like Redux or Zustand.
+* **Icons:** `lucide-react` for standard UI icons, alongside custom assets exported directly from Figma.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Implementation Details & Approach
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Data-Driven Architecture
+The entire builder configures itself from `src/data/bundle.json`. This acts as the mock API response. The UI maps over this JSON to render the steps, products, plans, and available variants.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Variant Selection & Steppers
+Handling variants correctly was a priority. The state tracks quantities per unique variant ID rather than per product. When a user selects a different color, the active variant ID updates, and the stepper reflects the count for that specific color. This ensures the review panel can display line items for every selected variant independently.
 
-```
+### Responsive Layout
+The layout matches the desktop Figma specs pixel-for-pixel using a two-column CSS grid. On smaller viewports, the layout stacks vertically, placing the review panel at the bottom or making it accessible as a summary, keeping the core building flow usable. Flex properties and min/max constraints were heavily used to maintain alignment.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### "Save for Later"
+I implemented client-side persistence using `localStorage`. When the "Save my system for later" button is clicked, the current state (selected variants and quantities) is serialized. On page load, the app hydrates from `localStorage` if a saved session exists, restoring the user's progress exactly as they left it.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tradeoffs
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+* **Mock Backend vs Real API:** Since this is a frontend-focused task, I opted to serve the initial data from a local JSON file rather than building out an Express backend. It fulfills the requirement while keeping the project easy to review and run.
+* **Recalculations:** Totals, subtotals, and savings are recalculated on the fly based on the current state. For a small catalog like this, dynamic calculation is fast and prevents state syncing bugs.
+* **CSS Grid vs Flexbox:** I used CSS Grid heavily in the builder section to ensure product cards in the same row maintain equal heights, regardless of how long their descriptions or titles are. This prevents broken grid layouts without resorting to fixed heights.
