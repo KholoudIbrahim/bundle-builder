@@ -20,8 +20,10 @@ export function Price({
   size = "md",
   tone = "default",
 }: PriceProps) {
-  const currentLabel =
-    currentPrice === 0 ? "FREE" : `${formatCurrency(currentPrice)}${billingLabel ?? ""}`;
+  const isFree = currentPrice === 0;
+  const currentLabel = isFree
+    ? "FREE"
+    : `${formatCurrency(currentPrice)}${billingLabel ?? ""}`;
 
   return (
     <div className={cn("text-right", className)}>
@@ -29,9 +31,7 @@ export function Price({
         <p
           className={cn(
             "text-sm leading-none line-through",
-            compareTone === "muted"
-              ? "text-[var(--color-text-muted)]"
-              : "text-[#e0352c]",
+            compareTone === "sale" ? "text-[#e0352c]" : "text-[#6F7882]",
             size === "sm" && "text-[0.78rem]",
           )}
         >
@@ -42,10 +42,10 @@ export function Price({
       <p
         className={cn(
           "mt-1 font-semibold leading-none",
-          tone === "default" && "text-[var(--color-text)]",
-          tone === "accent" && "text-[var(--color-primary)]",
+          isFree && "text-[var(--color-success)] tracking-[0.02em]",
+          !isFree && tone === "accent" && "text-[var(--color-primary)]",
+          !isFree && tone === "default" && "text-[var(--color-text)]",
           size === "sm" ? "text-[0.84rem]" : "text-[0.94rem]",
-          currentPrice === 0 && "tracking-[0.02em]",
         )}
       >
         {currentLabel}

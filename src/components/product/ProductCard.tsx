@@ -31,26 +31,27 @@ export function ProductCard({
   return (
     <article
       className={cn(
-        "relative flex h-full min-h-[9.85rem] min-w-0 flex-col overflow-hidden rounded-[8px] border bg-white p-3 transition duration-200",
+        "relative flex h-full min-w-0 flex-col overflow-hidden rounded-[8px] bg-white p-3 transition duration-200",
         isSelected
-          ? "border-[var(--color-primary)]"
-          : "border-transparent hover:border-[var(--color-border)]",
+          ? "border-2 border-[var(--color-primary)]"
+          : "border border-[var(--color-border-soft)] hover:border-[var(--color-border)]",
         className,
       )}
     >
       {product.badge ? <Badge className="self-start">{product.badge}</Badge> : null}
-      <div
-        className={cn(
-          "mt-2 grid min-w-0 gap-3",
-          isPlan
-            ? "grid-cols-[5rem_minmax(0,1fr)]"
-            : "grid-cols-[5.3rem_minmax(0,1fr)]",
-        )}
-      >
-        <div className="flex h-[5rem] items-center justify-center self-start rounded-[5px] bg-white px-1.5 py-2">
+
+      {/* Main row: big image left | content right */}
+      <div className="mt-2 flex min-w-0 flex-1 gap-3">
+        {/* Image column — stretches full height of content */}
+        <div
+          className={cn(
+            "flex shrink-0 items-center justify-center self-stretch rounded-[6px]",
+            isPlan ? "w-[5.5rem]" : "w-[6rem]",
+          )}
+        >
           {isPlan ? (
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-surface-highlight)] text-[var(--color-primary)]">
-              <ShieldCheck className="h-6 w-6" />
+            <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--color-surface-highlight)] text-[var(--color-primary)]">
+              <ShieldCheck className="h-7 w-7" />
             </span>
           ) : (
             <ProductArtwork
@@ -62,20 +63,23 @@ export function ProductCard({
             />
           )}
         </div>
-        <div className="flex min-w-0 flex-col">
+
+        {/* Right content */}
+        <div className="flex min-w-0 flex-1 flex-col">
           <h3 className="text-[1rem] font-bold leading-[1.12] text-[var(--color-text)] sm:text-[1.08rem]">
             {product.title}
           </h3>
           <p className="mt-1 text-[0.82rem] leading-[1.3] text-[var(--color-text-secondary)]">
-            {product.description}
+            {product.description}{" "}
+            <a
+              className="font-bold transition duration-200"
+              href={product.learnMoreHref}
+              style={{ color: "var(--color-primary)", textDecoration: "underline", textUnderlineOffset: "2px" }}
+            >
+              Learn More
+            </a>
           </p>
-          <a
-            className="mt-0.5 self-start text-[0.82rem] font-medium text-[#0000ee] underline underline-offset-2 transition hover:text-[var(--color-primary)]"
-            href={product.learnMoreHref}
-          >
-            Learn More
-          </a>
-          <div className="mt-3">
+          <div className="mt-2">
             <VariantSelector
               onSelect={onVariantSelect}
               productAlt={product.alt}
@@ -85,22 +89,23 @@ export function ProductCard({
               variants={product.variants}
             />
           </div>
+          {/* Counter + price — under content, not under image */}
+          <div className="mt-3 flex items-center justify-between gap-2">
+            <QuantityStepper
+              max={product.maxQuantity}
+              min={product.minQuantity ?? 0}
+              onChange={onQuantityChange}
+              quantity={activeQuantity}
+            />
+            <Price
+              billingLabel={product.billingLabel}
+              compareTone="sale"
+              compareAtPrice={product.compareAtPrice}
+              currentPrice={product.currentPrice}
+              tone={isPlan ? "accent" : "default"}
+            />
+          </div>
         </div>
-      </div>
-      <div className="mt-auto flex items-end justify-between gap-3 pt-3">
-        <QuantityStepper
-          max={product.maxQuantity}
-          min={product.minQuantity ?? 0}
-          onChange={onQuantityChange}
-          quantity={activeQuantity}
-        />
-        <Price
-          billingLabel={product.billingLabel}
-          compareTone="sale"
-          compareAtPrice={product.compareAtPrice}
-          currentPrice={product.currentPrice}
-          tone={isPlan ? "accent" : "default"}
-        />
       </div>
     </article>
   );

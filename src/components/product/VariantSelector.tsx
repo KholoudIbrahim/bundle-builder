@@ -33,7 +33,7 @@ export function VariantSelector({
             className={cn(
               "inline-flex h-7 items-center gap-1.5 rounded-[3px] border px-2 text-[0.78rem] leading-none transition",
               isSelected
-                ? "border-[#33d6c1] bg-white text-[var(--color-text)]"
+                ? "border-[var(--color-success)] bg-[color:color-mix(in_oklab,var(--color-success)_10%,white)] text-[var(--color-text)] shadow-[0_0_0_1px_var(--color-success)]"
                 : "border-[var(--color-border-soft)] bg-white text-[var(--color-text-muted)] hover:border-[var(--color-border)] hover:text-[var(--color-text)]",
             )}
             key={variant.id}

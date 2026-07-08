@@ -1,4 +1,59 @@
+@font-face {
+  font-family: 'Gilroy';
+  src: local('Gilroy Regular'), local('Gilroy-Regular'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-Regular.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: local('Gilroy Medium'), local('Gilroy-Medium'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-Medium.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: local('Gilroy SemiBold'), local('Gilroy-SemiBold'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-SemiBold.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: local('Gilroy Bold'), local('Gilroy-Bold'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-Bold.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy-RegularItalic';
+  src: local('Gilroy Regular Italic'), local('Gilroy-RegularItalic'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-RegularItalic.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/npm/@qpokychuk/gilroy@1.0.2/src/Gilroy-RegularItalic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Gilroy", "Segoe UI", "Avenir Next", "Nunito Sans", sans-serif;
+  --font-gilroy-italic: "Gilroy-RegularItalic", "Segoe UI", "Avenir Next", "Nunito Sans", sans-serif;
+}
 
 :root {
   --color-obsidian: #0b0d10;
@@ -17,12 +72,6 @@
   --radius-panel: 8px;
   --shadow-card: 0 8px 22px rgba(27, 38, 59, 0.05);
   --shadow-card-hover: 0 12px 28px rgba(27, 38, 59, 0.08);
-  --font-display:
-    "Gilroy-SemiBold",
-    "Segoe UI",
-    "Avenir Next",
-    "Nunito Sans",
-    sans-serif;
 }
 
 *,
@@ -71,4 +120,21 @@ button {
 
 ::selection {
   background: rgba(91, 61, 245, 0.18);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--color-border-soft);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border);
 }

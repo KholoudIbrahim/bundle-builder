@@ -19,11 +19,11 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center rounded-[6px] font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-45",
+        "inline-flex items-center justify-center rounded-[8px] font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-45",
         variant === "primary" &&
           "bg-[var(--color-primary)] text-white shadow-[0_16px_30px_rgba(81,55,224,0.24)] hover:bg-[var(--color-primary-hover)]",
         variant === "outline" &&
-          "border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[color:color-mix(in_oklab,var(--color-primary)_8%,white)]",
+          "border-2 border-[var(--color-primary)] font-bold text-[var(--color-primary)] hover:bg-[color:color-mix(in_oklab,var(--color-primary)_8%,white)]",
         variant === "ghost" &&
           "text-[var(--color-text-muted)] underline-offset-4 hover:text-[var(--color-text)] hover:underline",
         size === "sm" && "min-h-8 px-3 text-sm",

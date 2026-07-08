@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Camera, ChevronDown, Radio, Shield, Sparkles } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "../../lib/cn";
 import type { BundleStep } from "../../types/bundle";
 
@@ -11,14 +11,6 @@ interface AccordionSectionProps {
   step: BundleStep;
 }
 
-const iconMap = {
-  camera: Camera,
-  shield: Shield,
-  radio: Radio,
-  sparkles: Sparkles,
-  truck: Shield,
-} as const;
-
 export function AccordionSection({
   children,
   isExpanded,
@@ -26,7 +18,6 @@ export function AccordionSection({
   selectedCount,
   step,
 }: AccordionSectionProps) {
-  const StepIcon = iconMap[step.icon];
   const panelId = `${step.id}-panel`;
 
   return (
@@ -54,8 +45,13 @@ export function AccordionSection({
           type="button"
         >
           <span className="flex items-center gap-3">
-            <span className="inline-flex h-8 w-8 items-center justify-center text-[var(--color-text-muted)]">
-              <StepIcon className="h-6 w-6 stroke-[1.6]" />
+            <span className="inline-flex h-8 w-8 items-center justify-center">
+              <img
+                alt=""
+                aria-hidden="true"
+                className="h-6 w-6 object-contain"
+                src={`/step-${step.number}.png`}
+              />
             </span>
             <span className="min-w-0 flex-1 text-[22px] font-bold leading-none text-[var(--color-obsidian)]">
               {step.title}

@@ -21,7 +21,7 @@ export function ProductArtwork({
     return (
       <img
         alt={alt}
-        className={cn("h-full w-full object-contain drop-shadow-[0_10px_20px_rgba(23,31,56,0.08)]", className)}
+        className={cn("h-full w-full object-contain", className)}
         loading="lazy"
         src={productAssetMap[assetKey]}
       />
@@ -38,7 +38,7 @@ export function ProductArtwork({
         )}
         role="img"
       >
-        <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-surface)] shadow-[0_14px_30px_rgba(91,61,245,0.14)]">
+        <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-surface)]">
           <ShieldCheck className="h-9 w-9 text-[var(--color-primary)]" />
         </span>
       </div>
